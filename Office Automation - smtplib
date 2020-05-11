@@ -1,0 +1,51 @@
+import smtplib
+
+from email.mime.multipart import MIMEMultipart
+
+from email.header import Header
+
+from email.mime.text import MIMEText
+
+from email.mime.image import MIMEImage
+
+import csv
+
+import time
+
+from_addr = input('username: ')
+password = input('password: ')
+
+server = smtplib.SMTP_SSL('smtp.gmail.com')
+server.login(from_addr, password)
+
+
+text = '''LET us twain walk aside from the rest;
+        Now we are together privately, do you discard ceremony,
+        Come! vouchsafe to me what has yet been vouchsafed to none—Tell me the whole story,
+        Tell me what you would not tell your brother, wife, husband, or physician.
+        Sending love to all of you. We Are Together.'''
+
+maillist = []
+to_addr = input('to：')
+maillist.append(to_addr)
+        
+with open('maillist.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    for row in maillist:
+        writer.writerow(row)
+        
+with open('maillist.csv', 'r', newline = '') as f:
+    reader = csv.reader(f)
+    for row in reader: 
+        to_addrs = row[0]
+        
+        header = 'To You - Walt Whitman'
+        
+        msg = MIMEText(text, 'plain', 'utf-8')
+        msg['Subject'] = header
+        msg['From'] = from_addr
+        msg['To'] = to_addrs
+
+        server.sendmail(from_addr, to_addrs, msg.as_string())
+
+server.quit()
