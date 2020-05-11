@@ -1,0 +1,46 @@
+import time
+import random
+
+player_victory = 0
+enemy_victory = 0
+
+for i in range(1,4):
+    time.sleep(1.5)
+    print('  \n——————Round %s ——————' % i)
+
+    player_life = random.randint(100,150)
+    player_attack = random.randint(30,50)
+    enemy_life = random.randint(100,150)
+    enemy_attack = random.randint(30,50)
+
+    print('【player】\nblood：%s\nattck：%s' % (player_life,player_attack))
+    print('------------------------')
+    time.sleep(1)
+    print('【enemy】\nblood：%s\nattck：%s' % (enemy_life,enemy_attack))
+    print('-----------------------')
+    time.sleep(1)
+
+    while player_life > 0 and enemy_life > 0:
+        player_life = player_life - enemy_attack 
+        enemy_life = enemy_life - player_attack
+        print('You started an attack，【enemy】remaining blood%s' % enemy_life)
+        print('Enemy started an attack，【player】remaining blood%s' % player_life)
+        print('-----------------------')
+        time.sleep(1.2)
+
+    if player_life > 0 and enemy_life <= 0:
+        player_victory += 1
+        print('You won!')
+    elif player_life <= 0 and enemy_life > 0:
+        enemy_victory += 1
+        print('The enemy won.')
+    else:
+        print('You both died.')
+
+if player_victory > enemy_victory :
+    time.sleep(1)
+    print('\n【Final result: You won】')
+elif enemy_victory > player_victory:
+    print('\n【Final result: You lost】')
+else: 
+    print('\n【Final result: Even】')
