@@ -1,0 +1,59 @@
+import time
+
+number_of_players = int(input("Please enter the number of players: "))
+name_list = []
+playerfile = open("player.txt","w")
+
+while len(name_list) < number_of_players:
+    name_of_players = str(input("Please enter the name of players: "))
+    name_list.append(name_of_players)
+
+def assign_numbers():
+    player_number = 0
+    for i in range(number_of_players):
+        player_number += 1   
+        print("player" + str(player_number) + " " + str(name_list[i]))
+
+assign_numbers()
+        
+def roll_function():
+    import random
+    import time
+    
+    roll1 = random.randint(0,10)
+    print(roll1)
+    playerfile.write(str(roll1) + '\n')
+    if roll1 == 10:
+        print("/")
+        playerfile.write(str(0) + '\n')
+    else:
+        0 <= roll1 < 9
+        roll2 = random.randint(0, 10-roll1)
+        playerfile.write(str(roll2) + '\n')
+        print(roll2)    
+    
+for round in range(1,11):
+    print(' \n —————— round %s ——————' % round)
+    for j in range(number_of_players):
+        playerfile.write(name_list[j] + '\n')
+        print(str(name_list[j]) + ": ")
+        roll_function()
+        time.sleep(0.5)   
+
+playerfile.close()
+
+print("\nFinal:")
+
+for g in range(0,number_of_players):
+    player_name = name_list[g]
+    total_score = 0
+    playerfile=open("player.txt","r")
+    read_lines = -1
+    for line in playerfile:
+        if player_name in line:
+            read_lines = 2
+        elif read_lines > 0:
+            read_lines -= 1
+            total_score += int(line)
+
+    print(str(player_name) + ':' + str(total_score))
