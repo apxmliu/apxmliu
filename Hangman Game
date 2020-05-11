@@ -1,0 +1,62 @@
+import time
+import random
+
+print('Welcome to the hangman game!')
+time.sleep(0.5)
+
+print("Let's begin!")
+time.sleep(0.5)
+
+words = open('words.txt', 'r')
+lines = words.read().splitlines()
+choose = random.randint(0, len(lines)-1)
+chosen = lines[choose]
+
+chosen_list = []
+for i in chosen:
+    chosen_list.append(chosen)
+
+guessed = ''
+rounds = 8
+word_len = len(chosen)*' _'
+
+while rounds > 0:
+    failed = 0
+    print(word_len, end = '  ')
+    
+    
+    for letter in chosen:
+        if letter in guessed:
+            print(letter + ' is correct!')
+            word_len = ' '.join([letter if letter == guessed else'_' for letter in chosen])
+            print(word_len)
+                
+        else:
+            print('_')
+            failed += 1
+                
+        if failed == 0:
+            print('Congratulations! The word is ' + chosen)
+            break
+                
+        guess = input('\n' + 'please eneter a letter: ').lower()
+        guessed += guess
+        
+        if guess not in chosen:
+            rounds = rounds - 1
+            print('You have ' + str(rounds) + ' more chances')
+            
+            if rounds == 0:
+                print('You lose. The word is ' + chosen)
+                
+        elif len(guess) > 1:
+            print('Please enter ONLY ONE letter.')
+            continue
+                
+        elif guess in guessed:
+            print('You ALREADY entered the letter.')
+            continue
+                
+        elif not guess.isalpha():
+            print('Please enter a LETTER.')
+            continue
