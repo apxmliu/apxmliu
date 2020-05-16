@@ -1,0 +1,60 @@
+# Linear Regression R Script
+
+# Set working directory. Go to tab "Session"- "Set Working Directory"-"Choose Directory" 
+# and browse for the folder where you saved your data file
+
+# Clear all previous stuff out of the workspace if needed
+# rm(list = ls());
+
+# No need to install any package
+
+# Import the dataset file
+mydata <- read.csv("C:/Users/path/filename.csv", header = TRUE)
+
+#...clean data set...
+#(including data type conversion, creating calculated columns)
+
+# Read the comma-delimited data file and make sure:
+#     1) The first row contain the data labels
+#     2) Numeric data fields only contain numbers
+
+# Turn on output to a txt file
+#   (append   = FALSE means overwrite the file if it already exists)
+#   (split    = TRUE  means send the output to the console too)
+sink("RegressionOutput.txt", append = FALSE, split = TRUE)
+
+pdf("rplot.pdf")
+
+# Check the correlation between predicted Y and the real Y by looking at the graph
+# (If the model fits the data well, we should be able to see a strong correlation between Y and Y.fit)
+
+plot(Y ~ Y.fit, data = mydata)
+
+# Check the correlation between each two explanatory variable to make sure the model does not have multi-collinearity issue
+pairs(Y ~ X1 + X2 + X3..., data = mydata)
+
+# Caculate correlation matrix
+res <- cor(mydata)
+
+round(res, 2)
+
+#  Fit the model with the dataset "mydata"
+mfit <- lm(Y ~ X1 + X2 + X3..., data = mydata)
+
+
+# Again, invoke the summary function
+summary(mfit)
+
+# Use the fitted model to predict charges, given the value of bmi
+mydata$Y.mfit <- predict(mfit)
+
+
+# Check the correlation between predicted charges and the real charges by looking at the graph
+# (If the model fits the data well, we should be able to see a strong correlation between Y and Y.mfit)
+
+
+plot(Y ~ Y.mfit, data = mydata)
+dev.off() 
+
+# Turn off output
+sink();
