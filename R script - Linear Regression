@@ -38,11 +38,11 @@ res <- cor(mydata)
 
 round(res, 2)
 
-#  Fit the model with the dataset "mydata"
+#  Fit the model with the dataset
 mfit <- lm(Y ~ X1 + X2 + X3..., data = mydata)
 
 
-# Again, invoke the summary function
+# Invoke the summary function
 summary(mfit)
 
 # Use the fitted model to predict charges, given the value of bmi
