@@ -1,0 +1,43 @@
+# Logistic Regression R Script
+
+# Set working directory. Go to tab "Session"- "Set Working Directory"-"Choose Directory" 
+# and browse for the folder where you saved your data file
+
+# Clear all previous stuff out of the workspace if needed
+# rm(list = ls());
+
+# No need to install any package
+
+# Import the dataset file
+mydata <- read.csv("C:/Users/path/filename.csv", header = TRUE)
+
+#...clean data set...
+#(including data type conversion, creating calculated columns)
+
+# Read the comma-delimited data file and make sure:
+#     1) The first row contain the data labels
+#     2) Numeric data fields only contain numbers
+
+# Turn on output to a txt file
+#   (append   = FALSE means overwrite the file if it already exists)
+#   (split    = TRUE  means send the output to the console too)
+sink("RegressionOutput.txt", append = FALSE, split = TRUE)
+
+pdf("rplot.pdf")
+
+pairs(Y ~ X1 + X2 + X3..., data = mydata)
+
+#  Fit the model with the dataset
+mfit = glm(Y ~ X1 + X2 + X3..., data = mydata, family="binomial")
+
+# Invoke the summary function
+summary(mfit)
+
+# Modify your model by incuding interaction terms
+mfit_interaction = glm(Y ~ X1 + X2 + X3 + X1*Z..., data = mydata, family="binomial")
+
+# Invoke the summary function
+summary(mfit_interaction)
+
+# Turn off output
+sink();
