@@ -1,0 +1,13 @@
+# import module
+from MyQR import myqr
+
+myqr.run(
+    words='https://aprilxm-liu.squarespace.com', #what shows after scanning
+    version=5,  
+    level='H',  
+    picture='she.gif', 
+    colorized=True, 
+    contrast=1.0,  
+    brightness=1.0, 
+    save_name='Python.gif',  # format can also be: .jpg， .png，.bmp，.gif
+    )
