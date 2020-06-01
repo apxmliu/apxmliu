@@ -58,8 +58,8 @@ class BookManager:
         for book in self.books:
             if book.name == name:
                  return book 
-        else:
-            return None
+            else:
+                 return None
 
     def lend_book(self):
         name = input('Please neter name of the book you want to borrow：')
