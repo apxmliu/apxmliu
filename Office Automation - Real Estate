@@ -1,0 +1,105 @@
+import csv
+
+with open ('assets.csv', 'a', newline = '') as csvfile:
+    #create a write object using csv.writer() function
+    writer = csv.writer(csvfile, dialect = 'excel')
+    header = ['Name of community', 'Address', 'Year', 'Block','Apartment number', 'Unit', 'Room', 'Direction', 'Area']
+    #create header
+    writer.writerow(header)
+    
+title = input('Please enter name of the community: ')
+address = input('Please enter address of the community: ')
+year = input('Please enter the year the community was built: ')
+block = input('Please enter the block number: ')
+
+#Create apartment loop to repeat inputting information of every apartment building
+apt_loop = True
+while apt_loop:
+    apt = input('Please enter apartment number: ')
+    start_floor = input('Please enter starting floor number: ')
+    end_floor = input('Please enter the ending floor number: ')
+    
+    #Now start creating start_floor template which will be used as iteration later on
+    
+    #This dictionary will store all units' information of the start floor
+    start_floor_units = {} 
+    
+    #This list will store all unit numbers of the start floor
+    start_floor_unit_num = [] 
+    
+    #Now start collecting start_floor units' information
+    
+    #Create unit loop to repeat inputting information of every unit's information
+    unit_loop = True
+    while unit_loop:
+        #Input start_floor unit numbers
+        unit_num = input('Please enter start floor unit numbers: ') 
+        #01, 02, 03, 04, 05
+        #Append unit_num into the start_floor_unit_num list
+        start_floor_unit_num.append(unit_num)
+        
+        #The final unit composition will be start_floor + unit_num
+        final_unit = int(start_floor + unit_num) 
+        #201, 202, 203, 204, 205
+        
+        #Input start_floor units' information
+        unit_type = int(input('Please enter %d unit type in 1 or 2: ' %final_unit))
+        area = int(input('Please enter %d area: ' %final_unit))
+        
+        #Append final_unit as keys, along with information as values, into the start_floor_units dictionary
+        start_floor_units[final_unit] = [unit_type, area] 
+        #{201:[1,300], 202:[1,400], 203:[2,600], 204:[2,700], 205:[2,700]}
+        
+        #To stop inputting information, press n to stop; press any to continue
+        continued = input("Press any to continue input another unit's information, press n to stop.")
+        
+        if continued  == 'n':
+            unit_loop = False #unit_loop will stop
+        else:
+            unit_loop = True #unit_loop will keeping going
+        
+#Now that we have had a dictionary with start_floor all units' information,
+#We can start to collect all floors' units' information
+
+#This dictionary will store all units' information of all floors
+all_floor_units = {} 
+
+#First, let's append start_floor as a key, along with start_floor_units dict as values, into the all_floor_units dictionary
+all_floor_units[start_floor] = start_floor_units
+#{2:{201:[1,300], 202:[1,400], 203:[2,600], 204:[2,700], 205:[2,700]}}
+
+#iterate every floor other than the start_floor
+for floor in range(int(start_floor) + 1, int(end_floor) + 1):
+    #This dictionary will store all units' information of each floor other than start_floor
+    each_floor_units = {}
+    #iterate every unit 
+    for unit in range(len(start_floor_units)):
+        #The number list will store each floor's unit numbers
+        number = str(floor) + start_floor_unit_num[unit] 
+        #301, 302, 303, 304, 305
+        #401, 402, 403, 404, 405...
+        
+        #The info dict will store information of each unit by grabbing start_floor_units's information list [1,300]
+        info = start_floor_units[int(start_floor + floor_unit_num[unit])] 
+        #[1,300], [1,400], [2,600], [2,700], [2,700],
+        #[1,300], [1,400], [2,600], [2,700], [2,700]...}
+        
+        #Append number as keys, along with info as values, into the each_floor_units dictionary
+        each_floor_units[int(number)] = info 
+        #{301:[1,300], 302:[1,400], 303:[2,600], 304:[2,700], 305:[2,700],
+        # 401:[1,300], 402:[1,400], 403:[2,600], 404:[2,700], 405:[2,700]...}
+        
+    #Append each_floor as a key, along with each_floor_units dict as values, into the all_floor_units dictionary
+    all_floor_units[floor] = each_floor_units
+    #{3: {301:[1,300], 302:[1,400], 303:[2,600], 304:[2,700], 305:[2,700]},
+    # 4: {401:[1,300], 402:[1,400], 403:[2,600], 404:[2,700], 405:[2,700]}...}
+
+#To stop inputting information, press n to stop; press any to continue
+continued = input("Press any to continue input another unit's information, press n to stop.")
+
+if continued  == 'n':
+    unit_loop = False #unit_loop will stop
+else:
+    unit_loop = True #unit_loop will keeping going
+    
+print('The record of assets is completed.')
