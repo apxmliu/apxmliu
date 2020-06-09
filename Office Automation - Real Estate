@@ -3,7 +3,7 @@ import csv
 with open ('assets.csv', 'a', newline = '') as csvfile:
     #create a write object using csv.writer() function
     writer = csv.writer(csvfile, dialect = 'excel')
-    header = ['Name of community', 'Address', 'Year', 'Block','Apartment number', 'Unit', 'Room', 'Direction', 'Area']
+    header = ['Name of community', 'Address', 'Year', 'Block','Apartment number', 'Unit', 'Unit Type', 'Area']
     #create header
     writer.writerow(header)
     
